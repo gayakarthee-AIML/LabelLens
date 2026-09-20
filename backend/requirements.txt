@@ -1,0 +1,52 @@
+# --- Web framework ---
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+python-multipart==0.0.9
+pydantic==2.8.2
+pydantic-settings==2.3.4
+
+# --- Auth ---
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1  # pinned: newer bcrypt (5.x) removed the __about__ attribute passlib's
+               # version-detection relies on, which breaks every password verify with
+               # "password cannot be longer than 72 bytes" — see backend/README.md
+
+# --- Database ---
+sqlalchemy==2.0.31
+alembic==1.13.2
+psycopg2-binary==2.9.9
+
+# --- Cache / queue ---
+redis==5.0.7
+httpx==0.27.0
+
+# --- Object storage ---
+boto3==1.34.144   # S3-compatible client, works against MinIO
+
+# --- Computer vision / OCR ---
+opencv-python-headless==4.10.0.84
+numpy==1.26.4
+paddlepaddle==2.6.2
+paddleocr==2.8.1
+ultralytics==8.2.58     # YOLOv8 region detection
+pyzbar==0.1.9            # EAN/UPC/QR barcode decoding (wraps libzbar)
+pillow==10.4.0
+
+# --- E-commerce listing extraction ---
+beautifulsoup4==4.12.3
+anthropic==0.34.2  # optional — multimodal extraction only, disabled without ANTHROPIC_API_KEY
+playwright==1.46.0  # optional — headless-browser render for JS-heavy listing pages;
+                    # falls back to a plain HTTP fetch automatically if Chromium isn't
+                    # installed. After `pip install`, run: playwright install chromium
+                    # (or `playwright install --with-deps chromium` on a fresh Linux box)
+
+# --- Rule config ---
+pyyaml==6.0.1
+
+# --- Reports ---
+reportlab==4.2.2
+python-docx==1.1.2
+
+# --- Utilities ---
+python-dateutil==2.9.0.post0

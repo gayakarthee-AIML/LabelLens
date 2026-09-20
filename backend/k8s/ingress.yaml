@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: labellens-api
+  namespace: labellens
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod   # HTTPS-ready via cert-manager
+    nginx.ingress.kubernetes.io/proxy-body-size: "25m"  # inspection images can be a few MB each
+spec:
+  tls:
+    - hosts: ["api.labellens.example.gov.in"]
+      secretName: labellens-api-tls
+  rules:
+    - host: api.labellens.example.gov.in
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: labellens-api
+                port:
+                  number: 80

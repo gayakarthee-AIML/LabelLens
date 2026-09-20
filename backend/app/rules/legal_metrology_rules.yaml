@@ -1,0 +1,224 @@
+# LabelLens compliance rule set.
+# Source: Legal Metrology (Packaged Commodities) Rules, 2011.
+# This is a prototype rule set covering the most commonly cited declaration
+# and readability requirements for demonstration and hackathon evaluation —
+# it is NOT a substitute for the full statutory text, and every rule's
+# `source` field cites the specific rule it is modeled on so it can be
+# reviewed against the original by a domain expert before any real
+# enforcement use.
+version: "2024.1"
+effective_date: "2024-01-01"
+rules:
+  - rule_id: LMR-2011-R6-COMMON-NAME
+    name: Common or generic name declared
+    description: Package must declare the common or generic name of the commodity.
+    applicable_category: ALL
+    requirement: A common/generic name declaration must be present and legible on the package.
+    validation_type: PRESENCE
+    severity: CRITICAL
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(a)"
+    enabled: true
+    params:
+      declaration_type: COMMON_NAME
+
+  - rule_id: LMR-2011-R6-NET-QUANTITY
+    name: Net quantity declared
+    description: Package must declare net quantity in standard units (weight/volume/number).
+    applicable_category: ALL
+    requirement: A net quantity declaration in standard units must be present.
+    validation_type: PRESENCE
+    severity: CRITICAL
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(b)"
+    enabled: true
+    params:
+      declaration_type: NET_QUANTITY
+
+  - rule_id: LMR-2011-R6-NET-QUANTITY-FORMAT
+    name: Net quantity in standard unit format
+    description: Declared net quantity must use a recognized standard unit (g/kg/ml/l).
+    applicable_category: ALL
+    requirement: Net quantity value must match a standard unit pattern.
+    validation_type: FORMAT
+    severity: MAJOR
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(b) / Second Schedule"
+    enabled: true
+    params:
+      declaration_type: NET_QUANTITY
+      pattern: '(?i)\d+(\.\d+)?\s?(g|kg|ml|l|gm|gms|ltr|litre)s?\.?$'
+
+  - rule_id: LMR-2011-R6-MRP
+    name: Maximum Retail Price declared
+    description: Package must declare MRP inclusive of all taxes.
+    applicable_category: ALL
+    requirement: An MRP declaration must be present.
+    validation_type: PRESENCE
+    severity: CRITICAL
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(e)"
+    enabled: true
+    params:
+      declaration_type: MRP
+
+  - rule_id: LMR-2011-R6-MANUFACTURER
+    name: Manufacturer / packer / importer details declared
+    description: Package must declare the name and address of the manufacturer, packer, or importer.
+    applicable_category: ALL
+    requirement: Manufacturer/packer/importer details must be present.
+    validation_type: PRESENCE
+    severity: CRITICAL
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(c)"
+    enabled: true
+    params:
+      declaration_type: MANUFACTURER_DETAILS
+
+  - rule_id: LMR-2011-R6-MFG-DATE
+    name: Month and year of manufacture/packing declared
+    description: Package must declare the month and year in which the commodity was manufactured or packed.
+    applicable_category: ALL
+    requirement: A month/year of manufacture or packing declaration must be present.
+    validation_type: PRESENCE
+    severity: MAJOR
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(d)"
+    enabled: true
+    params:
+      declaration_type: MFG_DATE
+
+  - rule_id: LMR-2011-R6-CONSUMER-CARE
+    name: Consumer care details declared
+    description: Package must declare a contact for consumer complaints/queries.
+    applicable_category: ALL
+    requirement: Consumer care details must be present.
+    validation_type: PRESENCE
+    severity: MINOR
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(f)"
+    enabled: true
+    params:
+      declaration_type: CONSUMER_CARE
+
+  - rule_id: LMR-2011-R8-FONT-SIZE
+    name: Minimum declaration font size
+    description: >
+      Declarations should meet a minimum legible text height. This prototype
+      compares OCR-estimated pixel text height against a configurable
+      threshold and always reports it as an ESTIMATE — true Rule 8 compliance
+      requires a physically calibrated measurement, which this system flags
+      as a manual/future capability rather than claiming to already perform.
+    applicable_category: ALL
+    requirement: Estimated text height should not fall below the configured pixel threshold.
+    validation_type: FONT_SIZE
+    severity: MAJOR
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 8"
+    enabled: true
+    params:
+      min_estimated_px: 14
+      applies_to: [MRP, NET_QUANTITY, COMMON_NAME]
+
+  - rule_id: LMR-2011-READABILITY
+    name: Declaration readability
+    description: Declarations must be clear, legible, and unobstructed.
+    applicable_category: ALL
+    requirement: OCR confidence and image quality for each declaration should not indicate poor readability.
+    validation_type: READABILITY
+    severity: MAJOR
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(2)"
+    enabled: true
+    params: {}
+
+  - rule_id: LMR-2011-COSMETICS-CONSUMER-CARE
+    name: Consumer care details declared (Cosmetics)
+    description: >
+      For cosmetics specifically, a missing consumer care declaration is
+      treated as a more serious finding than the general MINOR severity
+      applied to other categories, reflecting typical cosmetics-specific
+      grievance/adverse-reaction reporting expectations.
+    applicable_category: Cosmetics
+    requirement: Consumer care details must be present on cosmetics packaging.
+    validation_type: PRESENCE
+    severity: CRITICAL
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(f), category-weighted"
+    enabled: true
+    params:
+      declaration_type: CONSUMER_CARE
+
+  - rule_id: LMR-2011-MRP-PATTERN
+    name: MRP declaration free of ambiguous pricing language
+    description: >
+      Flags MRP declarations using ambiguous phrasing ("starting from",
+      "onwards", "upto") instead of a single definite price — a
+      non-standard/potentially misleading declaration pattern per brief
+      section 16. This is a pattern-based flag for manual review, not a
+      legal determination.
+    applicable_category: ALL
+    requirement: MRP text should not contain open-ended pricing language.
+    validation_type: TEXT_PATTERN
+    severity: MINOR
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(e), non-standard declaration control"
+    enabled: true
+    params:
+      declaration_type: MRP
+      pattern: '(?i)(starting from|onwards|upto|up to|approx)'
+      mode: must_not_match
+
+  - rule_id: LMR-2011-MRP-NUMERIC
+    name: MRP is a valid positive number
+    description: Declared MRP must parse as a positive numeric value.
+    applicable_category: ALL
+    requirement: MRP value must be a positive number.
+    validation_type: NUMERIC
+    severity: MAJOR
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(e), format integrity control"
+    enabled: true
+    params:
+      declaration_type: MRP
+      min: 0.01
+
+  - rule_id: LMR-2011-NET-QTY-RANGE
+    name: Net quantity within plausible range
+    description: >
+      Declared net quantity numeric value should fall within a plausible
+      range for a retail pack. Values far outside this range usually
+      indicate an OCR misread rather than an actual declaration issue, so
+      this always resolves to REVIEW rather than FAIL.
+    applicable_category: ALL
+    requirement: Net quantity numeric value should be between 1 and 25000 (grams/millilitres-equivalent).
+    validation_type: RANGE
+    severity: MINOR
+    source: "Internal LabelLens control — OCR sanity check, not a numbered Legal Metrology rule"
+    enabled: true
+    params:
+      declaration_type: NET_QUANTITY
+      min: 1
+      max: 25000
+
+  - rule_id: LMR-2011-UNIT-PRICE-CROSSFIELD
+    name: Unit sale price implies net quantity declared
+    description: >
+      Where a unit sale price is declared, the net quantity it is based on
+      must also be declared for the unit price to be meaningful to a
+      consumer.
+    applicable_category: ALL
+    requirement: If Unit Sale Price is present, Net Quantity must also be present.
+    validation_type: CROSS_FIELD
+    severity: MAJOR
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 6(1)(b)/(g) read together"
+    enabled: true
+    params:
+      if_declaration: UNIT_SALE_PRICE
+      then_declaration: NET_QUANTITY
+      condition_type: present_implies_present
+
+  - rule_id: LMR-2011-BARCODE-CROSSCHECK
+    name: Barcode/QR consistency with declared product information
+    description: >
+      Decoded barcode/QR should be consistent with the declared
+      brand/manufacturer/net quantity. Scoped to electronic products only,
+      per the brief — QR/barcode compliance scanning is not run for other
+      commodity categories. The category list is configurable via
+      Settings.electronic_categories, and this rule's applicable_category
+      is kept in sync with it.
+    applicable_category: "Electronics,Electronics Accessory,Electronic Appliance"
+    requirement: Barcode/QR registry lookup should not indicate a mismatch, for electronic products.
+    validation_type: BARCODE_MATCH
+    severity: MAJOR
+    source: "Internal LabelLens control — counterfeit-risk / traceability check (not a Legal Metrology rule number)"
+    enabled: true
+    params: {}

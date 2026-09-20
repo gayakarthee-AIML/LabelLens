@@ -1,0 +1,34 @@
+# LabelLens font-size (Rule 8) minimum text-height standards.
+# Source: Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 8 and the
+# Second Schedule, which set minimum letter/numeral heights for specific
+# declarations. This is a prototype simplification (real Rule 8 thresholds
+# also vary with the *area of the principal display panel*, which this first
+# version does not yet compute) — every entry's `source` cites the rule it
+# is modeled on so it can be reviewed and refined by a domain expert.
+#
+# Loaded by app/db/seed.py into the `font_size_standards` table on startup,
+# and editable afterwards by an Administrator via /api/v1/font-size/standards
+# without a code change — the same dynamic-configuration approach used for
+# app/rules/legal_metrology_rules.yaml.
+version: "2024.1"
+standards:
+  - standard_id: FONT-MRP
+    name: MRP declaration minimum height
+    keyword: "mrp"
+    min_height_mm: 4.0
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 8, MRP declaration"
+    enabled: true
+
+  - standard_id: FONT-NET-QTY
+    name: Net quantity declaration minimum height
+    keyword: "net"
+    min_height_mm: 4.0
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 8, net quantity declaration"
+    enabled: true
+
+  - standard_id: FONT-DEFAULT
+    name: General declaration minimum height
+    keyword: "DEFAULT"
+    min_height_mm: 1.0
+    source: "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 8, general minimum"
+    enabled: true

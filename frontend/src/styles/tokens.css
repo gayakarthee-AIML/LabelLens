@@ -1,0 +1,33 @@
+:root {
+  /* Color — an inspection dossier, not a SaaS dashboard: paper, ink, and the
+     three verdict colors an inspector actually stamps a report with. */
+  --color-ink: #16213e;
+  --color-ink-soft: #2c3a63;
+  --color-paper: #f7f4ee;
+  --color-paper-dim: #ede8dc;
+  --color-paper-raised: #ffffff;
+  --color-line: #d8d2c4;
+  --color-steel: #5b6470;
+  --color-verdict-green: #2e6f40;
+  --color-verdict-green-bg: #e5efe3;
+  --color-violation-red: #a6373b;
+  --color-violation-red-bg: #f5e6e4;
+  --color-review-amber: #b9812b;
+  --color-review-amber-bg: #f3ecd9;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "IBM Plex Sans", -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --sidebar-width: 232px;
+}
